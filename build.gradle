@@ -1,0 +1,34 @@
+// File: build.gradle (Versi Final untuk Disalin)
+
+plugins {
+    // Plugin utama untuk aplikasi Java
+    id 'application'
+    // Plugin untuk JavaFX
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+// Menentukan di mana Gradle akan mencari library
+repositories {
+    mavenCentral()
+}
+
+// Daftar library yang dibutuhkan oleh proyek Anda
+dependencies {
+    // Dependensi untuk driver database SQLite
+    implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
+
+    // Dependensi untuk testing (dibuat oleh 'gradle init')
+    testImplementation 'junit:junit:4.13.2'
+}
+
+// Konfigurasi utama aplikasi
+application {
+    // Menentukan Main class yang akan dijalankan saat aplikasi di-start
+    mainClass = 'com.moneyexpense.expense_tracker.Main'
+}
+
+// Konfigurasi spesifik untuk JavaFX
+javafx {
+    version = "21"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
