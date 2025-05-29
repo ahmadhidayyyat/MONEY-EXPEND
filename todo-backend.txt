@@ -1,0 +1,19 @@
+🧑‍💻 Person A: Backend & Database Lead 
+(Fokus pada model data, logika akses database/DAO, dan sebagian service).
+
+# Minggu 1: Fondasi, Autentikasi, dan Kerangka Utama (29 Mei – 5 Juni)
+    🎯 Tujuan Minggu Ini:
+        1.Sistem login & registrasi pengguna berfungsi penuh dengan database SQLite (password di-hash).
+        2.Struktur proyek lengkap dengan semua file kerangka (kosong atau dengan boilerplate awal) sudah ada di GitHub.
+        3.Scene utama (MainView.fxml) bisa diakses setelah login berhasil (meskipun isinya masih kosong/placeholder).
+        4.Semua anggota tim sudah nyaman dengan alur kerja Git (clone, commit, push, pull).
+
+# Rincian Tugas Mingguan:
+    🧑‍💻 Person A (Backend & Database):
+    1.Finalisasi desain skema database SQLite (pengguna dan pengeluaran). Buat file database-nya.
+    2.Implementasikan interface IDataManager.java.
+    3.Implementasikan SqliteDataManager.java:
+        -Metode untuk menyimpan pengguna baru (registrasiUser).
+        -Metode untuk mencari pengguna berdasarkan username (loginUser).
+        -Pastikan password pengguna di-hash sebelum disimpan ke DB dan diverifikasi saat login.
+    4.Implementasikan bagian dari ManajemenAkun.java (Service) yang memanggil metode DAO untuk registrasi dan login.
