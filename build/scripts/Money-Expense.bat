@@ -74,7 +74,7 @@ set CLASSPATH=%APP_HOME%\lib\Money-Expense.jar;%APP_HOME%\lib\sqlite-jdbc-3.45.1
 
 
 @rem Execute Money-Expense
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %MONEY_EXPENSE_OPTS%  -classpath "%CLASSPATH%" com.moneyexpense.expense_tracker.Main %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %MONEY_EXPENSE_OPTS%  -classpath "%CLASSPATH%" moneyexpense.Main %*
 
 :end
 @rem End local scope for the variables with windows NT shell

@@ -212,7 +212,7 @@ DEFAULT_JVM_OPTS=""
 
 set -- \
         -classpath "$CLASSPATH" \
-        com.moneyexpense.expense_tracker.Main \
+        moneyexpense.Main \
         "$@"
 
 # Stop when "xargs" is not available.

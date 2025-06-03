@@ -24,7 +24,7 @@ dependencies {
 // Konfigurasi utama aplikasi
 application {
     // Menentukan Main class yang akan dijalankan saat aplikasi di-start
-    mainClass = 'com.moneyexpense.expense_tracker.Main'
+    mainClass = 'moneyexpense.Main'
 }
 
 // Konfigurasi spesifik untuk JavaFX
