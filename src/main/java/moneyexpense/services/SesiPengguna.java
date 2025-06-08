@@ -1,4 +1,4 @@
-package moneyexpense.service;
+package moneyexpense.services;
 
 public class SesiPengguna {
     
