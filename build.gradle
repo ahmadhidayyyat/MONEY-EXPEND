@@ -17,6 +17,8 @@ dependencies {
     // Dependensi untuk driver database SQLite
     implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
 
+    implementation 'org.mindrot:jbcrypt:0.4'
+
     // Dependensi untuk testing (dibuat oleh 'gradle init')
     testImplementation 'junit:junit:4.13.2'
 }

@@ -1,0 +1,53 @@
+# File .gitignore untuk Project Gradle + JavaFX
+
+### Gradle ###
+.gradle/
+build/
+out/
+bin/
+.gradletasknamecache
+
+### IDE ###
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+*.swp
+*.swo
+
+### Java ###
+*.class
+*.log
+*.ctxt
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+### JavaFX Cache ###
+javafx_pid*
+
+### Sistem Operasi ###
+.DS_Store
+Thumbs.db
+
+### Logs ###
+*.log
+logs/
+
+### File Khusus JavaFX ###
+*.fxml.cache
+*.css.cache
+
+### File Build ###
+dist/
+lib/
+!gradle/wrapper/gradle-wrapper.jar
+
+### Dependency Cache ###
+**/target/
+**/dependency-reduced-pom.xml
