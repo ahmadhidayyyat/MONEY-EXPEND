@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Impor library JavaFX yang dibutuhkan -->
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!-- 
+  Root element, dalam contoh ini menggunakan VBox untuk menyusun elemen secara vertikal.
+  fx:controller menunjuk ke class Controller yang akan mengelola logika untuk view ini.
+  Penting: pastikan path package-nya benar.
+-->
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moneyexpense.controller.LoginController">
+   
+   <!-- Padding untuk VBox agar tidak terlalu mepet ke tepi window -->
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   
+   <!-- Judul Halaman Login -->
+   <Label text="Selamat Datang!">
+      <font>
+         <Font name="System Bold" size="24.0" />
+      </font>
+   </Label>
+   
+   <!-- Label untuk menampilkan pesan error atau status -->
+   <Label fx:id="labelPesanError" textFill="RED" />
+   
+   <!-- Input untuk Username -->
+   <Label text="Username" />
+   <TextField fx:id="inputUsername" promptText="Masukkan username Anda" />
+   
+   <!-- Input untuk Password -->
+   <Label text="Password" />
+   <PasswordField fx:id="inputPassword" promptText="Masukkan password Anda" />
+   
+   <!-- 
+     Tombol Login.
+     fx:id digunakan agar bisa diakses dari Controller.
+     onAction menunjuk ke method yang akan dijalankan di Controller saat tombol diklik.
+   -->
+   <Button fx:id="tombolLogin" onAction="#handleLoginButton" prefWidth="200.0" text="Login" />
+   
+   <!-- Tombol untuk navigasi ke Halaman Registrasi -->
+   <Button fx:id="tombolKeRegister" onAction="#handleKeRegisterButton" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Belum punya akun? Daftar di sini" underline="true" />
+
+</VBox>

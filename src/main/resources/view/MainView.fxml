@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!-- 
+  Root layout menggunakan BorderPane untuk tata letak yang fleksibel.
+  Controller dihubungkan ke moneyexpense.controller.MainViewController.
+-->
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moneyexpense.controller.MainViewController">
+   
+   <!-- Bagian Atas: Header dengan sambutan dan tombol logout -->
+   <top>
+      <BorderPane prefHeight="50.0" style="-fx-background-color: #F0F0F0; -fx-border-color: #CCCCCC; -fx-border-width: 0 0 1 0;">
+         <left>
+            <!-- Label ini akan menampilkan nama pengguna yang login -->
+            <Label fx:id="labelSelamatDatang" text="Selamat Datang, User!" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+         </left>
+         <right>
+            <!-- Tombol untuk logout dari aplikasi -->
+            <Button fx:id="tombolLogout" onAction="#handleLogoutButton" text="Logout" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets right="20.0" />
+               </BorderPane.margin>
+            </Button>
+         </right>
+      </BorderPane>
+   </top>
+   
+   <!-- Bagian Tengah: Konten utama aplikasi -->
+   <center>
+      <VBox alignment="CENTER" spacing="20.0">
+         <children>
+            <Label text="Konten Utama Aplikasi Anda di Sini">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="(Misalnya: Tabel data pengeluaran, form input, dll.)" />
+         </children>
+      </VBox>
+   </center>
+
+</BorderPane>
