@@ -1,13 +1,16 @@
 package moneyexpense;
 
-import java.sql.SQLException;
 import java.util.List;
+import java.sql.SQLException;
 
 import moneyexpense.models.Pengeluaran;
 import moneyexpense.models.Pengguna;
+import moneyexpense.services.AuthService;
 import moneyexpense.utils.DatabaseConnection;
 
 public class MainExample {
+    public static AuthService authService = AuthService.getInstance();
+
     public static void main(String[] args) {
         // Initialize database dengan pengecekan error
         try {
@@ -33,6 +36,8 @@ public class MainExample {
             // Example login
             Pengguna loggedInUser = Pengguna.login("testuser", "password123");
             System.out.println("Logged in as: " + loggedInUser.getUsername());
+
+            authService.login(loggedInUser);
 
             // Example expense creation
             Pengeluaran expense = new Pengeluaran(
