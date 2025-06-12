@@ -70,7 +70,8 @@ public class ManajemenAkun {
         if (penggunaOpt.isPresent()) {
             Pengguna pengguna = penggunaOpt.get();
             if (BcryptService.verifyPassword(plainPassword, pengguna.getPassword())) {
-                authService.login(pengguna); // Simpan sesi pengguna
+                // MENJADI INI:
+                authService.setUserAsLoggedIn(pengguna); // Simpan sesi pengguna
                 return true;
             }
         }
