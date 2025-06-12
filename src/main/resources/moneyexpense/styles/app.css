@@ -1,0 +1,202 @@
+/* Gaya dasar */
+.root {
+  -fx-font-family: "System";
+}
+
+/* Panel Kiri */
+.left-panel {
+  -fx-background-color: #ffffff;
+}
+
+.header-text {
+  -fx-font-size: 28px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #1e293b; /* Warna teks gelap */
+}
+
+.body-text {
+  -fx-font-size: 14px;
+  -fx-text-fill: #64748b; /* Warna teks abu-abu */
+}
+
+.form-label {
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #334155;
+}
+
+/* ================================== */
+/* === BAGIAN BARU UNTUK TEKS LOGO === */
+/* ================================== */
+.logo-text-large {
+  -fx-font-size: 38px;
+  -fx-font-weight: 800; /* Extra-bold */
+  -fx-text-fill: #1e293b;
+}
+
+.logo-text-small {
+  -fx-font-size: 12px;
+  -fx-text-fill: #94a3b8;
+  -fx-letter-spacing: 0.15em; /* Jarak antar huruf */
+}
+/* ================================== */
+
+.form-input {
+  -fx-border-color: #e2e8f0;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+  -fx-padding: 12px;
+  -fx-font-size: 14px;
+}
+
+.form-input:focused {
+  -fx-border-color: #4a69e2; /* Warna biru saat fokus */
+  -fx-background-color: #eff6ff;
+}
+
+.login-button {
+  -fx-background-color: #4a69e2; /* Warna biru utama */
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-padding: 12px;
+  -fx-background-radius: 8px;
+  -fx-cursor: hand;
+}
+
+.login-button:hover {
+  -fx-background-color: #3b54b5; /* Biru lebih gelap saat hover */
+}
+
+/* Tombol ini akan terlihat seperti link/hyperlink */
+.link-button {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-text-fill: #4a69e2;
+  -fx-underline: false;
+  -fx-cursor: hand;
+}
+
+.link-button:hover {
+  -fx-underline: true;
+}
+
+.error-text {
+  -fx-text-fill: #d32f2f; /* Warna merah untuk error */
+  -fx-font-size: 13px;
+}
+
+/* Panel Kanan */
+.right-panel {
+  -fx-background-color: #4a69e2; /* Warna biru utama */
+}
+
+.right-header-text {
+  -fx-font-size: 30px;
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+  -fx-line-spacing: 5px;
+}
+
+.right-body-text {
+  -fx-font-size: 16px;
+  -fx-text-fill: rgba(255, 255, 255, 0.85);
+}
+
+/* ======== MAIN VIEW STYLES ======== */
+
+.scroll-pane {
+  -fx-background-color: #f1f5f9; /* Warna latar abu-abu muda */
+}
+
+.center-panel {
+  -fx-background-color: transparent;
+}
+
+/* Kartu Ringkasan Bulanan */
+.summary-card-container {
+  -fx-spacing: 15px;
+}
+
+.summary-card {
+  -fx-padding: 20px;
+  -fx-background-radius: 12px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 2);
+}
+
+.summary-card-title {
+  -fx-font-size: 14px;
+  -fx-text-fill: rgba(255, 255, 255, 0.9);
+}
+
+.summary-card-value {
+  -fx-font-size: 28px;
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+}
+
+/* Warna spesifik untuk setiap kartu */
+.summary-card-blue {
+  -fx-background-color: linear-gradient(to right, #4a69e2, #3b54b5);
+}
+.summary-card-green {
+  -fx-background-color: linear-gradient(to right, #16a34a, #15803d);
+}
+.summary-card-sky {
+  -fx-background-color: linear-gradient(to right, #0ea5e9, #0284c7);
+}
+
+/* Tabel */
+.table-view {
+  -fx-border-color: #e2e8f0;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+}
+
+/* Tombol Aksi di dalam Tabel */
+.action-button-edit {
+  -fx-background-color: #f59e0b; /* amber-500 */
+  -fx-text-fill: white;
+  -fx-font-size: 12px;
+  -fx-cursor: hand;
+}
+.action-button-edit:hover {
+  -fx-background-color: #d97706;
+}
+
+.action-button-delete {
+  -fx-background-color: #ef4444; /* red-500 */
+  -fx-text-fill: white;
+  -fx-font-size: 12px;
+  -fx-cursor: hand;
+}
+.action-button-delete:hover {
+  -fx-background-color: #dc2626;
+}
+
+/* Tombol Lain */
+.cancel-button {
+  -fx-background-color: #64748b; /* slate-500 */
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-padding: 12px;
+  -fx-background-radius: 8px;
+  -fx-cursor: hand;
+}
+.cancel-button:hover {
+  -fx-background-color: #475569;
+}
+
+.logout-button {
+  -fx-background-color: #f1f5f9;
+  -fx-text-fill: #64748b;
+  -fx-font-size: 14px;
+  -fx-border-color: #e2e8f0;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+  -fx-cursor: hand;
+}
+.logout-button:hover {
+  -fx-background-color: #e2e8f0;
+}

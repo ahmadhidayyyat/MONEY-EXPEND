@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moneyexpense.controller.MainController">
+   
+   <left>
+      <VBox prefWidth="300.0" spacing="10.0" styleClass="left-panel" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <children>
+                  <ImageView fx:id="logoImageView" fitHeight="70.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LOGO KASKU (LOGO ONLY) - FINAL PBO.png" />
+                     </image>
+                  </ImageView>
+                  <VBox>
+                     <children>
+                        <Label styleClass="logo-text-large " text="KASKU" />
+                        <Label styleClass="logo-text-small" text="MANAGE YOUR EXPENSE" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+
+            <Label fx:id="formTitleLabel" styleClass="header-text" text="Add New Expense" />
+            <VBox prefHeight="10.0" />
+            
+            <Label styleClass="form-label" text="Date" />
+            <DatePicker fx:id="datePicker" prefWidth="300.0" />
+            
+            <Label styleClass="form-label" text="Amount (Rp)" />
+            <TextField fx:id="amountField" promptText="e.g., 50000" styleClass="form-input" />
+            
+            <Label styleClass="form-label" text="Description" />
+            <TextArea fx:id="descriptionArea" prefHeight="100.0" promptText="e.g., Makan siang" styleClass="form-input" wrapText="true" />
+            
+            <Label fx:id="formErrorLabel" managed="false" styleClass="error-text" text="" />
+            
+            <Button fx:id="submitButton" onAction="#handleSubmitButton" prefWidth="300.0" styleClass="login-button" text="Add Expense" />
+            <Button fx:id="cancelEditButton" managed="false" onAction="#handleCancelEditButton" prefWidth="300.0" styleClass="cancel-button" text="Cancel Edit" visible="false" />
+            
+            <VBox VBox.vgrow="ALWAYS" />
+            <Button fx:id="logoutButton" onAction="#handleLogoutButton" prefWidth="300.0" styleClass="logout-button" text="Logout" />
+
+         </children>
+      </VBox>
+   </left>
+   
+   <center>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-pane" BorderPane.alignment="CENTER">
+         <content>
+            <VBox fx:id="monthlyExpensesContainer" spacing="20.0" styleClass="center-panel">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <Label styleClass="header-text" text="Dashboard" />
+                  <Label styleClass="body-text" text="Loading expense data..." />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+   
+</BorderPane>
