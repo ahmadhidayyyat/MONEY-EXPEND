@@ -68,4 +68,8 @@ public class AuthService {
     public boolean isLoggedIn() {
         return this.currentUser != null;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> bd33d9850ee63b61e158da4c82e4d4c8ad5bd0d2
