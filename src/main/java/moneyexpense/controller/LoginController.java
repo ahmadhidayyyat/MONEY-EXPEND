@@ -43,35 +43,41 @@ public class LoginController {
      *
      * @param event Aksi event dari klik tombol.
      */
-    @FXML
-    void handleLoginButton(ActionEvent event) {
-        String username = inputUsername.getText();
-        String password = inputPassword.getText();
+   // MENJADI SEPERTI INI
+@FXML
+void handleLoginButton(ActionEvent event) {
+    String username = inputUsername.getText();
+    String password = inputPassword.getText();
 
-        // Validasi sederhana agar input tidak kosong
-        if (username.isEmpty() || password.isEmpty()) {
-            labelPesanError.setText("Username dan password tidak boleh kosong!");
-            return;
-        }
+    // Reset pesan error setiap kali tombol diklik
+    labelPesanError.setText("");
 
-        try {
-            // Memanggil metode login statis dari kelas Pengguna
-            Pengguna pengguna = Pengguna.login(username, password);
-            
-            // Jika login berhasil (tidak ada SQLException yang dilempar),
-            // simpan sesi pengguna menggunakan AuthService.
-            AuthService.getInstance().login(pengguna);
-            
-            // Navigasi ke halaman utama aplikasi
-            NavigatorService.navigateTo("/view/MainView.fxml", tombolLogin);
-
-        } catch (SQLException e) {
-            // Jika Pengguna.login() melempar SQLException, berarti login gagal.
-            // Tampilkan pesan error di UI.
-            labelPesanError.setText("Username atau password salah. Coba lagi.");
-            System.err.println("Login error: " + e.getMessage());
-        }
+    if (username.isEmpty() || password.isEmpty()) {
+        labelPesanError.setText("Username dan password tidak boleh kosong!");
+        return;
     }
+
+    try {
+        // 1. Panggil service untuk melakukan proses login.
+        //    Metode login di service akan mengembalikan true jika berhasil, false jika gagal.
+        AuthService authService = AuthService.getInstance();
+        boolean isLoginSuccess = authService.login(username, password);
+
+        // 2. Cek hasilnya
+        if (isLoginSuccess) {
+            // Jika berhasil, navigasi ke halaman utama. Path sudah diperbaiki.
+            NavigatorService.navigateTo("/moneyexpense/view/MainView.fxml", tombolLogin);
+        } else {
+            // Jika gagal (misal: password salah), tampilkan pesan error.
+            labelPesanError.setText("Username atau password salah. Coba lagi.");
+        }
+    } catch (Exception e) {
+        // Exception ini ditangkap jika ada masalah koneksi ke database.
+        labelPesanError.setText("Terjadi error pada database. Coba lagi nanti.");
+        System.err.println("Database error saat login: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
 
     /**
      * Method ini dieksekusi ketika tombol 'Daftar di sini' (fx:id="tombolKeRegister") diklik.

@@ -1,33 +1,21 @@
 package moneyexpense.services;
 
+import moneyexpense.dao.IDataManager;
+import moneyexpense.dao.SqliteDataManager;
 import moneyexpense.models.Pengguna;
+import java.sql.SQLException;
+import java.util.Optional;
 
-/**
- * Kelas ini bertanggung jawab untuk mengelola sesi pengguna yang sedang login.
- * Menggunakan pola Singleton untuk memastikan hanya ada satu instance dari
- * layanan ini di seluruh aplikasi, sehingga data pengguna yang login konsisten.
- */
 public class AuthService {
 
-    // Satu-satunya instance dari AuthService (Singleton)
     private static AuthService instance;
-    
-    // Variabel untuk menyimpan data pengguna yang sedang aktif/login
     private Pengguna currentUser;
+    private IDataManager dataManager;
 
-    /**
-     * Constructor dibuat private untuk mencegah pembuatan instance baru dari luar kelas.
-     */
     private AuthService() {
-        // Kosongkan, karena ini adalah bagian dari pola Singleton
+        this.dataManager = new SqliteDataManager();
     }
 
-    /**
-     * Metode static untuk mendapatkan satu-satunya instance dari kelas ini.
-     * Jika instance belum ada, maka akan dibuat terlebih dahulu.
-     *
-     * @return instance dari AuthService.
-     */
     public static AuthService getInstance() {
         if (instance == null) {
             instance = new AuthService();
@@ -35,41 +23,45 @@ public class AuthService {
         return instance;
     }
 
-    /**
-     * Menyimpan objek Pengguna saat login berhasil.
-     *
-     * @param user Objek Pengguna yang telah diautentikasi.
-     */
-    public void login(Pengguna user) {
-        this.currentUser = user;
+    // Metode ini untuk OTENTIKASI dari halaman LOGIN
+    public boolean login(String username, String password) throws SQLException {
+        Optional<Pengguna> optionalUser = dataManager.cariPenggunaByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
+
+        Pengguna userFromDb = optionalUser.get();
+        
+        // Ganti ini dengan BcryptService jika sudah diimplementasikan
+        boolean passwordMatch = password.equals(userFromDb.getPassword());
+
+        if (passwordMatch) {
+            // Panggil metode baru untuk mengatur sesi
+            setUserAsLoggedIn(userFromDb); 
+            return true;
+        }
+        return false;
     }
 
-    /**
-     * Menghapus data pengguna dari sesi saat logout.
-     */
+    // --- METODE BARU ---
+    // Metode ini untuk MENGATUR SESI setelah objek Pengguna sudah didapat
+    // (misalnya setelah registrasi atau login sukses).
+    public void setUserAsLoggedIn(Pengguna user) {
+        this.currentUser = user;
+        System.out.println("Sesi telah diatur untuk pengguna: " + user.getUsername());
+    }
+
+
     public void logout() {
         this.currentUser = null;
     }
 
-    /**
-     * Mendapatkan objek Pengguna yang sedang login.
-     *
-     * @return Objek Pengguna yang sedang login, atau null jika tidak ada yang login.
-     */
     public Pengguna getCurrentUser() {
         return this.currentUser;
     }
 
-    /**
-     * Memeriksa apakah ada pengguna yang sedang login.
-     *
-     * @return true jika ada pengguna yang login, false jika tidak.
-     */
     public boolean isLoggedIn() {
         return this.currentUser != null;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> bd33d9850ee63b61e158da4c82e4d4c8ad5bd0d2
