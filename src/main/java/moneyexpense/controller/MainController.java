@@ -2,61 +2,60 @@ package moneyexpense.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import moneyexpense.models.Pengguna;
-import moneyexpense.services.AuthService;
-import moneyexpense.services.NavigatorService;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class MainController {
 
-/**
- * Controller untuk mengelola logika dari MainView.fxml.
- * Kelas ini bertanggung jawab untuk menampilkan data setelah pengguna berhasil login
- * dan menangani interaksi pengguna di halaman utama.
- */
-public class MainController implements Initializable {
-
-    // --- Injeksi komponen dari FXML ---
+    // --- Bagian Form Input ---
     @FXML
-    private Label labelSelamatDatang;
-
+    private Label formTitleLabel;
     @FXML
-    private Button tombolLogout;
+    private DatePicker datePicker;
+    @FXML
+    private TextField amountField;
+    @FXML
+    private TextArea descriptionArea;
+    @FXML
+    private Label formErrorLabel;
+    @FXML
+    private Button submitButton;
+    @FXML
+    private Button cancelEditButton;
 
-    /**
-     * Metode ini dipanggil secara otomatis saat FXML dimuat.
-     * Digunakan untuk inisialisasi data awal pada view.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Panggil AuthService untuk mendapatkan pengguna yang sedang login
-        Pengguna penggunaSaatIni = AuthService.getInstance().getCurrentUser();
-        
-        // Periksa apakah ada pengguna yang login
-        if (penggunaSaatIni != null) {
-            // Jika ada, set teks label dengan nama pengguna
-            labelSelamatDatang.setText("Selamat Datang, " + penggunaSaatIni.getUsername() + "!");
-        } else {
-            // Kasus jika halaman ini diakses tanpa login (seharusnya tidak terjadi)
-            labelSelamatDatang.setText("Selamat Datang!");
-            // Idealnya, navigasikan kembali ke halaman login jika tidak ada sesi
-        }
+    // --- Bagian Lain ---
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private VBox monthlyExpensesContainer;
+
+    // Metode 'initialize' akan dipanggil secara otomatis setelah FXML dimuat.
+    // Di sinilah kita akan memuat data awal.
+    @FXML
+    public void initialize() {
+        System.out.println("MainViewController berhasil dimuat.");
+        // Logika untuk memuat data pengeluaran akan ada di sini
     }
 
-    /**
-     * Metode ini dieksekusi ketika tombol 'Logout' (fx:id="tombolLogout") diklik.
-     * Membersihkan sesi dan mengarahkan pengguna kembali ke halaman login.
-     *
-     * @param event Aksi event dari klik tombol.
-     */
+    // Metode ini akan dihubungkan ke tombol 'Add/Update Expense'
+    @FXML
+    void handleSubmitButton(ActionEvent event) {
+        // Logika untuk menambah atau mengupdate pengeluaran
+    }
+
+    // Metode ini untuk tombol 'Cancel Edit'
+    @FXML
+    void handleCancelEditButton(ActionEvent event) {
+        // Logika untuk membatalkan mode edit
+    }
+
+    // Metode ini untuk tombol 'Logout'
     @FXML
     void handleLogoutButton(ActionEvent event) {
-        // Bersihkan sesi pengguna yang login
-        AuthService.getInstance().logout();
-        // Navigasi kembali ke halaman login
-        NavigatorService.navigateTo("/view/LoginView.fxml", tombolLogout);
+        // Logika untuk logout
     }
 }

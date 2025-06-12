@@ -82,6 +82,6 @@ public class LoginController {
     @FXML
     void handleKeRegisterButton(ActionEvent event) {
         // Gunakan helper class untuk berpindah scene ke halaman registrasi
-        NavigatorService.navigateTo("/view/RegisterView.fxml", tombolKeRegister);
+        NavigatorService.navigateTo("/moneyexpense/view/RegisterView.fxml", tombolKeRegister);
     }
 }
