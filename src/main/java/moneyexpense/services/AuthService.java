@@ -23,31 +23,7 @@ public class AuthService {
         return instance;
     }
 
-    // Metode ini untuk OTENTIKASI dari halaman LOGIN
-    public boolean login(String username, String password) throws SQLException {
-        Optional<Pengguna> optionalUser = dataManager.cariPenggunaByUsername(username);
-
-        if (optionalUser.isEmpty()) {
-            return false;
-        }
-
-        Pengguna userFromDb = optionalUser.get();
-
-        // Gunakan BcryptService untuk verifikasi password
-        boolean passwordMatch = BcryptService.verifyPassword(password, userFromDb.getPassword());
-
-        if (passwordMatch) {
-            // Set user session
-            setUserAsLoggedIn(userFromDb); 
-            return true;
-        }
-        return false;
-    }
-
-    // --- METODE BARU ---
-    // Metode ini untuk MENGATUR SESI setelah objek Pengguna sudah didapat
-    // (misalnya setelah registrasi atau login sukses).
-    public void setUserAsLoggedIn(Pengguna user) {
+    public void setUserAsLoggedIn(Pengguna user) { 
         this.currentUser = user;
         System.out.println("Sesi telah diatur untuk pengguna: " + user.getUsername());
     }

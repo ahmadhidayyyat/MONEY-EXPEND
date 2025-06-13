@@ -16,7 +16,7 @@ public class LoginController {
     @FXML private Button tombolLogin;
     @FXML private Button tombolKeRegister;
 
-    private final ManajemenAkun manajemenAkun = new ManajemenAkun();
+    private ManajemenAkun manajemenAkun = new ManajemenAkun();
 
     @FXML
     void handleLoginButton(ActionEvent event) {
@@ -35,8 +35,8 @@ public class LoginController {
                 return;
             }
 
-            boolean loginSuccess = manajemenAkun.loginUser(username, password);
-            if (loginSuccess) {
+            boolean isloginSuccess = manajemenAkun.loginUser(username, password);
+            if (isloginSuccess) {
                 NavigatorService.navigateTo("/moneyexpense/view/MainView.fxml", tombolLogin);
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error Login", null, "Password salah. Coba lagi.");

@@ -9,11 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/*
- * @param: namaParameter, deskripsi singkat tentang parameter tersebut
- * @return: Deskripsi tentang nilai yang dikembalikan
- */
-
 /**
  * Kelas ini adalah implementasi konkret dari IDataManager untuk database SQLite.
  * Bertanggung jawab penuh untuk semua operasi Create, Read, Update, Delete (CRUD)
@@ -21,37 +16,20 @@ import java.util.Optional;
  */
 public class SqliteDataManager implements IDataManager {
 
-    // =================================================================================
-    // Implementasi Operasi untuk Model Pengguna
-    // =avadocs
-    /**
-     * Menyimpan objek Pengguna baru ke dalam database.
-     * Password yang disimpan di dalam objek Pengguna diasumsikan sudah di-hash.
-     * @param pengguna Objek Pengguna yang akan disimpan.
-     */
     @Override
-    public void simpanPengguna(Pengguna pengguna) {
+    public void simpanPengguna(Pengguna pengguna) throws SQLException { // Tambahkan throws
         String sql = "INSERT INTO pengguna(username, password) VALUES(?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, pengguna.getUsername());
-            pstmt.setString(2, pengguna.getPassword()); // Ini harus HASH password
+            pstmt.setString(2, pengguna.getPassword());
             pstmt.executeUpdate();
-
         } catch (SQLException e) {
-            // Dalam aplikasi nyata, ini seharusnya dilempar sebagai custom exception
-            // atau di-log menggunakan framework logging.
-            System.err.println("Error saat menyimpan pengguna: " + e.getMessage());
-            e.printStackTrace();
+            // Jangan tangkap di sini, biarkan service yang menanganinya
+            throw e; 
         }
     }
 
-    /**
-     * Mencari seorang pengguna berdasarkan username.
-     * @param username Username yang akan dicari.
-     * @return Optional yang berisi objek Pengguna jika ditemukan, atau Optional kosong jika tidak.
-     */
     @Override
     public Optional<Pengguna> cariPenggunaByUsername(String username) {
         String sql = "SELECT id, username, password FROM pengguna WHERE username = ?";
@@ -76,28 +54,12 @@ public class SqliteDataManager implements IDataManager {
         return Optional.empty();
     }
 
-    /**
-     * Memeriksa apakah sebuah username sudah terdaftar di database.
-     * @param username Username yang akan diperiksa.
-     * @return true jika username sudah ada, false jika belum.
-     */
     @Override
     public boolean isUsernameExists(String username) {
         // Implementasi yang efisien dengan memanfaatkan metode yang sudah ada.
         return cariPenggunaByUsername(username).isPresent();
     }
 
-
-    // =================================================================================
-    // Implementasi Operasi untuk Model Pengeluaran
-    // =================================================================================
-
-    /**
-     * Menyimpan objek Pengeluaran baru ke dalam database.
-     * Metode ini juga akan mengambil ID yang dihasilkan oleh database dan mengaturnya
-     * kembali ke objek Pengeluaran yang diberikan.
-     * @param pengeluaran Objek Pengeluaran yang akan disimpan.
-     */
     @Override
     public void simpanPengeluaran(Pengeluaran pengeluaran) {
         String sql = "INSERT INTO pengeluaran(id_pengguna, tanggal, jumlah, keterangan) VALUES(?, ?, ?, ?)";
@@ -125,11 +87,6 @@ public class SqliteDataManager implements IDataManager {
         }
     }
 
-    /**
-     * Memperbarui data pengeluaran yang sudah ada di database.
-     * @param pengeluaran Objek Pengeluaran dengan data terbaru. ID dari objek ini digunakan untuk mencari record yang akan diupdate.
-     * @return true jika pembaruan berhasil, false jika gagal.
-     */
     @Override
     public boolean updatePengeluaran(Pengeluaran pengeluaran) {
         String sql = "UPDATE pengeluaran SET tanggal = ?, jumlah = ?, keterangan = ? WHERE id = ?";
@@ -151,11 +108,6 @@ public class SqliteDataManager implements IDataManager {
         }
     }
 
-    /**
-     * Menghapus sebuah data pengeluaran dari database berdasarkan ID-nya.
-     * @param idPengeluaran ID dari pengeluaran yang akan dihapus.
-     * @return true jika penghapusan berhasil, false jika gagal.
-     */
     @Override
     public boolean hapusPengeluaran(int idPengeluaran) {
         String sql = "DELETE FROM pengeluaran WHERE id = ?";
@@ -173,11 +125,6 @@ public class SqliteDataManager implements IDataManager {
         }
     }
 
-    /**
-     * Mengambil satu data pengeluaran berdasarkan ID-nya.
-     * @param idPengeluaran ID dari pengeluaran yang dicari.
-     * @return Optional yang berisi objek Pengeluaran jika ditemukan, atau Optional kosong jika tidak.
-     */
     @Override
     public Optional<Pengeluaran> getPengeluaranById(int idPengeluaran) {
         String sql = "SELECT id, id_pengguna, tanggal, jumlah, keterangan FROM pengeluaran WHERE id = ?";
@@ -204,11 +151,6 @@ public class SqliteDataManager implements IDataManager {
         return Optional.empty();
     }
 
-    /**
-     * Mengambil semua data pengeluaran milik seorang pengguna.
-     * @param idPengguna ID dari pengguna yang pengeluarannya akan ditampilkan.
-     * @return List yang berisi semua objek Pengeluaran, atau list kosong jika tidak ada.
-     */
     @Override
     public List<Pengeluaran> getAllPengeluaranByUserId(int idPengguna) {
         String sql = "SELECT id, tanggal, jumlah, keterangan FROM pengeluaran WHERE id_pengguna = ? ORDER BY tanggal DESC";
@@ -237,18 +179,6 @@ public class SqliteDataManager implements IDataManager {
         return daftarPengeluaran;
     }
 
-
-    // =================================================================================
-    // Implementasi Operasi Agregasi
-    // =================================================================================
-
-    /**
-     * Menghitung total jumlah pengeluaran untuk pengguna tertentu pada bulan dan tahun tertentu.
-     * @param idPengguna ID pengguna.
-     * @param bulan String bulan dalam format 2 digit (misal: "01" untuk Januari, "12" untuk Desember).
-     * @param tahun String tahun dalam format 4 digit (misal: "2025").
-     * @return Total jumlah pengeluaran dalam bentuk double.
-     */
     @Override
     public double getTotalPengeluaranBulanIni(int idPengguna, String bulan, String tahun) {
         String sql = "SELECT SUM(jumlah) AS total FROM pengeluaran WHERE id_pengguna = ? AND strftime('%m', tanggal) = ? AND strftime('%Y', tanggal) = ?";
