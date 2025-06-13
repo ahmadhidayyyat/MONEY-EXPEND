@@ -11,17 +11,6 @@ Money-Expense adalah aplikasi desktop yang dirancang untuk membantu pengguna mel
 - **Penyimpanan Data Lokal**: Semua data pengguna dan pengeluaran disimpan secara lokal dalam database SQLite.
 - **Antarmuka Adaptif**: Ukuran jendela aplikasi akan dipertahankan saat navigasi antar halaman untuk pengalaman pengguna yang lebih baik.
 
-## 📸 Tampilan Aplikasi
-
-*(Catatan: Ganti path/to/your/screenshot.png dengan path sebenarnya dari gambar Anda setelah Anda mengambil screenshot.)*
-
-<p align="center">
-<strong>Tampilan Login & Dashboard</strong><br><br>
-<img src="path/to/your/login_view_screenshot.png" width="45%" alt="Tampilan Login">
-&nbsp; &nbsp;
-<img src="path/to/your/main_view_screenshot.png" width="45%" alt="Tampilan Dashboard Utama">
-</p>
-
 ## 💻 Teknologi yang Digunakan
 
 - **Bahasa Pemrograman**: Java
