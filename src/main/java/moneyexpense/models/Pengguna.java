@@ -5,6 +5,8 @@ public class Pengguna {
     private String username;
     private String password; // akan menyimpan HASH password, bukan plain text
 
+    
+
     public Pengguna(String username, String password) {
         this.username = username;
         this.password = password;
@@ -23,4 +25,6 @@ public class Pengguna {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    
 }

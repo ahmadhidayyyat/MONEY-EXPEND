@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import moneyexpense.models.Pengeluaran;
 import moneyexpense.models.Pengguna;
 import moneyexpense.services.AuthService;
@@ -20,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class MainViewController implements Initializable {
+public class MainController implements Initializable {
 
     @FXML private Label labelSelamatDatang;
     @FXML private Label labelTotalBulanIni;
@@ -30,17 +32,27 @@ public class MainViewController implements Initializable {
     @FXML private TableColumn<Pengeluaran, Double> kolomJumlah;
     @FXML private TableColumn<Pengeluaran, Void> kolomAksi;
     @FXML private DatePicker inputTanggal;
-    @FXML private TextField inputKeterangan;
+    @FXML private TextArea inputKeterangan; // Changed from TextField to TextArea
     @FXML private TextField inputJumlah;
     @FXML private Button tombolTambah;
     @FXML private Button tombolUpdate;
     @FXML private Button tombolLogout;
+    @FXML private Button cancelEditButton; // Added FXML field
 
     private final ManajemenAkun manajemenAkun = new ManajemenAkun();
     private final NavigatorService navigatorService = new NavigatorService();
     private final AuthService authService = AuthService.getInstance();
     private final ObservableList<Pengeluaran> daftarPengeluaran = FXCollections.observableArrayList();
     private Pengeluaran pengeluaranTerpilih = null;
+
+    @FXML
+    void handleCancelEditButton(ActionEvent event) {
+        // Logic for handling the cancel button click
+        clearForm();
+        tombolTambah.setVisible(true);
+        tombolUpdate.setVisible(false);
+        cancelEditButton.setVisible(false);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,6 +65,10 @@ public class MainViewController implements Initializable {
         setupTable();
         loadData();
 
+        tombolTambah.setVisible(true);
+        tombolUpdate.setVisible(false);
+        cancelEditButton.setVisible(false);
+
         tableViewPengeluaran.getSelectionModel().selectedItemProperty().addListener(
             (obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
@@ -61,7 +77,7 @@ public class MainViewController implements Initializable {
             }
         );
     }
-    
+
     private void setupTable() {
         kolomTanggal.setCellValueFactory(new PropertyValueFactory<>("tanggal"));
         kolomKeterangan.setCellValueFactory(new PropertyValueFactory<>("keterangan"));
@@ -115,35 +131,52 @@ public class MainViewController implements Initializable {
         clearForm();
     }
     
-    @FXML
-    void handleTambahButton(ActionEvent event) {
-        try {
-            String tanggal = inputTanggal.getValue().format(DateTimeFormatter.ISO_LOCAL_DATE);
-            double jumlah = Double.parseDouble(inputJumlah.getText());
-            String keterangan = inputKeterangan.getText();
-            
-            manajemenAkun.catatPengeluaranBaru(tanggal, jumlah, keterangan);
-            loadData();
-        } catch (NumberFormatException e) {
-            System.err.println("Input jumlah tidak valid.");
-        }
-    }
+@FXML
+void handleTambahButton(ActionEvent event) {
+    try {
+        String tanggal = inputTanggal.getValue().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        double jumlah = Double.parseDouble(inputJumlah.getText());
+        String keterangan = inputKeterangan.getText();
 
-    @FXML
-    void handleUpdateButton(ActionEvent event) {
-        if (pengeluaranTerpilih == null) return;
-        
-        try {
-            pengeluaranTerpilih.setTanggal(inputTanggal.getValue().format(DateTimeFormatter.ISO_LOCAL_DATE));
-            pengeluaranTerpilih.setJumlah(Double.parseDouble(inputJumlah.getText()));
-            pengeluaranTerpilih.setKeterangan(inputKeterangan.getText());
-
-            manajemenAkun.updateDataPengeluaran(pengeluaranTerpilih);
-            loadData();
-        } catch (NumberFormatException e) {
-            System.err.println("Input jumlah tidak valid.");
+        boolean success = manajemenAkun.catatPengeluaranBaru(tanggal, jumlah, keterangan);
+        if (!success) {
+            showAlert(Alert.AlertType.ERROR, "Error", null, "Gagal mencatat pengeluaran. Pastikan data valid dan Anda telah login.");
+            return;
         }
+        loadData();
+    } catch (NumberFormatException e) {
+        showAlert(Alert.AlertType.WARNING, "Peringatan", null, "Input jumlah tidak valid. Masukkan angka yang benar.");
     }
+}
+
+@FXML
+void handleUpdateButton(ActionEvent event) {
+    if (pengeluaranTerpilih == null) return;
+
+    try {
+        pengeluaranTerpilih.setTanggal(inputTanggal.getValue().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        pengeluaranTerpilih.setJumlah(Double.parseDouble(inputJumlah.getText()));
+        pengeluaranTerpilih.setKeterangan(inputKeterangan.getText());
+
+        boolean success = manajemenAkun.updateDataPengeluaran(pengeluaranTerpilih);
+        if (!success) {
+            showAlert(Alert.AlertType.ERROR, "Error", null, "Gagal mengupdate pengeluaran. Pastikan data valid dan Anda memiliki izin.");
+            return;
+        }
+        loadData();
+    } catch (NumberFormatException e) {
+        showAlert(Alert.AlertType.WARNING, "Peringatan", null, "Input jumlah tidak valid. Masukkan angka yang benar.");
+    }
+}
+
+private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
+    Alert alert = new Alert(alertType);
+    alert.setTitle(title);
+    if (header != null) alert.setHeaderText(header);
+    alert.setContentText(content);
+    alert.showAndWait();
+}
+
     
     private void handleHapus(Pengeluaran pengeluaran) {
         manajemenAkun.hapusDataPengeluaran(pengeluaran.getId());
@@ -161,6 +194,10 @@ public class MainViewController implements Initializable {
         inputTanggal.setValue(LocalDate.parse(pengeluaran.getTanggal()));
         inputKeterangan.setText(pengeluaran.getKeterangan());
         inputJumlah.setText(String.valueOf(pengeluaran.getJumlah()));
+
+        tombolTambah.setVisible(false);
+        tombolUpdate.setVisible(true);
+        cancelEditButton.setVisible(true);
     }
 
     private void clearForm() {
@@ -169,5 +206,9 @@ public class MainViewController implements Initializable {
         inputKeterangan.clear();
         inputJumlah.clear();
         tableViewPengeluaran.getSelectionModel().clearSelection();
+
+        tombolTambah.setVisible(true);
+        tombolUpdate.setVisible(false);
+        cancelEditButton.setVisible(false);
     }
 }

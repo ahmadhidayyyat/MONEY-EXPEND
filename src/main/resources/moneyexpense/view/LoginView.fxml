@@ -12,7 +12,7 @@
 
 <HBox alignment="CENTER" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moneyexpense.controller.LoginController">
    <children>
-      <VBox alignment="CENTER_LEFT" prefWidth="500.0" spacing="15.0" styleClass="left-panel">
+      <VBox alignment="CENTER_LEFT" spacing="15.0" styleClass="left-panel" HBox.hgrow="ALWAYS">
          <padding>
             <Insets bottom="50.0" left="60.0" right="60.0" top="50.0" />
          </padding>
@@ -60,7 +60,7 @@
          </children>
       </VBox>
       
-      <VBox alignment="CENTER" prefWidth="500.0" spacing="20.0" styleClass="right-panel">
+      <VBox alignment="CENTER" spacing="20.0" styleClass="right-panel" HBox.hgrow="ALWAYS">
          <padding>
             <Insets bottom="60.0" left="60.0" right="60.0" top="60.0" />
          </padding>

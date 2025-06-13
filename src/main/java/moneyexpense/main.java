@@ -10,11 +10,15 @@ import java.net.URL;
 
 public class Main extends Application {
 
+    // Tentukan ukuran awal window berdasarkan tampilan terbesar (MainView.fxml)
+    private static final double INITIAL_WIDTH = 1280;
+    private static final double INITIAL_HEIGHT = 800;
+
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Kita akan memuat FXML untuk halaman utama untuk tes
-            String fxmlPath = "/moneyexpense/view/LoginView.fxml"; 
+            // Tampilan awal adalah LoginView.fxml
+            String fxmlPath = "/moneyexpense/view/LoginView.fxml";
             URL fxmlUrl = getClass().getResource(fxmlPath);
 
             if (fxmlUrl == null) {
@@ -23,7 +27,9 @@ public class Main extends Application {
             }
             
             Parent root = FXMLLoader.load(fxmlUrl);
-            Scene scene = new Scene(root);
+            // Buat scene dengan ukuran awal yang telah ditentukan
+            // Ini memastikan window cukup besar untuk semua elemen, bahkan untuk tampilan terbesar.
+            Scene scene = new Scene(root, INITIAL_WIDTH, INITIAL_HEIGHT);
 
             // Menambahkan CSS
             String cssPath = "/moneyexpense/styles/app.css";
@@ -36,6 +42,8 @@ public class Main extends Application {
 
             primaryStage.setTitle("Money Expense Tracker");
             primaryStage.setScene(scene);
+            // Ukuran stage akan mengikuti ukuran scene yang sudah diatur.
+            // Jika pengguna mengubah ukuran window, NavigatorService akan mempertahankan ukuran baru tersebut.
             primaryStage.show();
 
         } catch (Exception e) {

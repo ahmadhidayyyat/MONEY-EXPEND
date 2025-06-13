@@ -6,7 +6,11 @@ public class DatabaseConnection {
     private static final String DB_URL = "jdbc:sqlite:src/main/resources/database.db";
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL);
+        try {
+            return DriverManager.getConnection(DB_URL);
+        } catch (SQLException e) {
+            throw new SQLException("Failed to connect to database. Please ensure the database file exists at: " + DB_URL + ". Error: " + e.getMessage(), e);
+        }
     }
 
     public static void initializeDatabase() {
@@ -36,8 +40,10 @@ public class DatabaseConnection {
             System.out.println("Database initialized successfully");
             
         } catch (Exception e) {
-            System.err.println("Error initializing database: " + e.getMessage());
+            System.err.println("Error initializing database. Please check if the database file is accessible at: " + DB_URL + ". Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
 }
+
+
