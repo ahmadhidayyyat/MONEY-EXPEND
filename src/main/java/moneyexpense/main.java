@@ -1,6 +1,7 @@
 package moneyexpense;
 
 import javafx.application.Application;
+import javafx.scene.image.Image; 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,6 +17,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        
+        // Ganti Icon APP
+        Image appIcon = new Image(getClass().getResourceAsStream("images/LOGO KASKU (LOGO ONLY) - FINAL PBO.png"));
+        primaryStage.getIcons().add(appIcon);
+
+        
         try {
             // Tampilan awal adalah LoginView.fxml
             String fxmlPath = "/moneyexpense/view/LoginView.fxml";
