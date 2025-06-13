@@ -121,18 +121,18 @@
 .summary-card {
   -fx-padding: 20px;
   -fx-background-radius: 12px;
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 2);
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0), 10, 0, 0, 2);
 }
 
 .summary-card-title {
   -fx-font-size: 14px;
-  -fx-text-fill: rgba(255, 255, 255, 0.9);
+  -fx-text-fill: rgba(0, 0, 0);
 }
 
 .summary-card-value {
   -fx-font-size: 28px;
   -fx-font-weight: bold;
-  -fx-text-fill: white;
+  -fx-text-fill: rgb(0, 0, 0);
 }
 
 /* Warna spesifik untuk setiap kartu */
@@ -154,22 +154,11 @@
 }
 
 /* Tombol Aksi di dalam Tabel */
-.action-button-edit {
-  -fx-background-color: #f59e0b; /* amber-500 */
-  -fx-text-fill: white;
-  -fx-font-size: 12px;
-  -fx-cursor: hand;
-}
+
 .action-button-edit:hover {
   -fx-background-color: #d97706;
 }
 
-.action-button-delete {
-  -fx-background-color: #ef4444; /* red-500 */
-  -fx-text-fill: white;
-  -fx-font-size: 12px;
-  -fx-cursor: hand;
-}
 .action-button-delete:hover {
   -fx-background-color: #dc2626;
 }
@@ -199,4 +188,28 @@
 }
 .logout-button:hover {
   -fx-background-color: #e2e8f0;
+}
+.action-button-edit {
+  -fx-background-color: #f59e0b;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-padding: 5px 10px;
+  -fx-background-radius: 5px;
+}
+
+.action-button-delete {
+  -fx-background-color: #f44336;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-padding: 5px 10px;
+  -fx-background-radius: 5px;
+}
+
+.summary-wrapper {
+  -fx-background-color: white;
+  -fx-background-radius: 12px;
+  -fx-padding: 20px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 2);
+  -fx-border-color: #e2e8f0;
+  -fx-border-radius: 12px;
 }
