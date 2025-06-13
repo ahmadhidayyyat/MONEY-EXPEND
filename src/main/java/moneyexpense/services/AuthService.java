@@ -32,12 +32,12 @@ public class AuthService {
         }
 
         Pengguna userFromDb = optionalUser.get();
-        
-        // Ganti ini dengan BcryptService jika sudah diimplementasikan
-        boolean passwordMatch = password.equals(userFromDb.getPassword());
+
+        // Gunakan BcryptService untuk verifikasi password
+        boolean passwordMatch = BcryptService.verifyPassword(password, userFromDb.getPassword());
 
         if (passwordMatch) {
-            // Panggil metode baru untuk mengatur sesi
+            // Set user session
             setUserAsLoggedIn(userFromDb); 
             return true;
         }
@@ -65,3 +65,4 @@ public class AuthService {
         return this.currentUser != null;
     }
 }
+

@@ -57,6 +57,11 @@ public class ManajemenAkun {
         }
     }
 
+    public boolean isUsernameExists(String username) {
+        return dataManager.isUsernameExists(username);
+    }
+
+
     /**
      * Logika bisnis untuk login pengguna.
      * Jika berhasil, data pengguna akan disimpan di AuthService.

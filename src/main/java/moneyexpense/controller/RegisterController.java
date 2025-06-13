@@ -1,88 +1,81 @@
 package moneyexpense.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import moneyexpense.models.Pengguna; // Anda perlu membuat kelas ini nanti
+import moneyexpense.exceptions.UsernameAlreadyExistsException;
+import moneyexpense.services.ManajemenAkun;
 import moneyexpense.services.NavigatorService;
 
 import java.sql.SQLException;
 
-/**
- * Controller untuk mengelola logika dari RegisterView.fxml.
- * Menangani pembuatan akun pengguna baru.
- */
 public class RegisterController {
 
-    @FXML
-    private TextField inputUsername;
+    @FXML private TextField inputUsername;
+    @FXML private PasswordField inputPassword;
+    @FXML private PasswordField inputKonfirmasiPassword;
+    @FXML private Button tombolRegister;
+    @FXML private Button tombolKeLogin;
 
-    @FXML
-    private PasswordField inputPassword;
+    private final ManajemenAkun manajemenAkun = new ManajemenAkun();
+    private final NavigatorService navigatorService = new NavigatorService();
 
-    @FXML
-    private PasswordField inputKonfirmasiPassword;
-
-    @FXML
-    private Button tombolRegister;
-
-    @FXML
-    private Button tombolKeLogin;
-
-    @FXML
-    private Label labelPesanError;
-
-    /**
-     * Dieksekusi saat tombol 'Register' diklik.
-     * Memvalidasi input dan mencoba membuat akun baru.
-     *
-     * @param event Aksi event dari klik tombol.
-     */
     @FXML
     void handleRegisterButton(ActionEvent event) {
-        String username = inputUsername.getText();
+        String username = inputUsername.getText().trim();
         String password = inputPassword.getText();
         String konfirmasiPassword = inputKonfirmasiPassword.getText();
 
-        // 1. Validasi input
         if (username.isEmpty() || password.isEmpty() || konfirmasiPassword.isEmpty()) {
-            labelPesanError.setText("Semua field wajib diisi!");
+            showAlert(Alert.AlertType.WARNING, "Peringatan", null, "Semua field harus diisi!");
             return;
         }
-
         if (!password.equals(konfirmasiPassword)) {
-            labelPesanError.setText("Password dan konfirmasi password tidak cocok!");
+            showAlert(Alert.AlertType.WARNING, "Peringatan", null, "Password dan konfirmasi tidak cocok!");
             return;
         }
 
-        // 2. Jika validasi lolos, coba buat akun baru
         try {
-            // Anda perlu membuat logika untuk registrasi di backend (misal, di kelas Pengguna atau service)
-            // Pengguna.register(username, password); 
+            if (manajemenAkun.isUsernameExists(username)) {
+                showAlert(Alert.AlertType.ERROR, "Error Registrasi", null, "Username sudah terdaftar!");
+                return;
+            }
 
-            // Jika berhasil, beri pesan sukses dan arahkan ke login
-            // Untuk sekarang kita anggap selalu berhasil dan langsung navigasi
-            System.out.println("Registrasi berhasil untuk username: " + username);
-            NavigatorService.navigateTo("/view/LoginView.fxml", tombolRegister);
+            manajemenAkun.registrasiUser(username, password);
+            showAlert(Alert.AlertType.INFORMATION, "Sukses", null, "Akun berhasil dibuat! Mengalihkan ke halaman login...");
 
-        } catch (Exception e) { // Sebaiknya gunakan exception yang lebih spesifik
-            // Jika username sudah ada, atau ada error database
-            labelPesanError.setText("Username sudah digunakan atau terjadi error.");
-            System.err.println("Registrasi error: " + e.getMessage());
+            // Navigasi otomatis ke login setelah 1 detik
+            Thread thread = new Thread(() -> {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {}
+                Platform.runLater(() -> navigatorService.navigateTo("/moneyexpense/view/LoginView.fxml", tombolRegister));
+            });
+            thread.setDaemon(true);
+            thread.start();
+
+        } catch (UsernameAlreadyExistsException e) {
+            showAlert(Alert.AlertType.ERROR, "Error Registrasi", null, e.getMessage());
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", null, "Terjadi kesalahan pada database. Coba lagi nanti.");
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Dieksekusi saat tombol 'Log In Now' diklik.
-     * Mengarahkan pengguna kembali ke halaman login.
-     *
-     * @param event Aksi event dari klik tombol.
-     */
     @FXML
     void handleKeLoginButton(ActionEvent event) {
-        NavigatorService.navigateTo("/moneyexpense/view/LoginView.fxml", tombolKeLogin);
+        navigatorService.navigateTo("/moneyexpense/view/LoginView.fxml", tombolKeLogin);
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        if (header != null) alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
